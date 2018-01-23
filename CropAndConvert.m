@@ -22,9 +22,9 @@ ssnName = ssnName([prjList.isdir]);
 ssnDir  = fullfile(prjDir,ssnName);
 orgDir  = fullfile(ssnDir,'originalData');
 dbName  = [timestamp,'.mat'];
-dbPath  = fullfile(prjDir,dbName);
+dbPath  = fullfile(ssnDir,dbName);
 xlsName = [timestamp,'.xlsx'];
-xlsPath = fullfile(prjDir,'tables',xlsName);
+xlsPath = fullfile(ssnDir,tables,xlsName);
 
 %% Crop and convert data
 LocObj = d12pack.LocationData;
@@ -34,7 +34,7 @@ LocObj.Country                  = 'United States of America';
 LocObj.Organization             = 'General Services Administration';
 
 ii = 1;
-for issn = 1:numel(ssnName)
+for issn = 2:numel(ssnName)
     Session      = struct('Name',ssnName{issn});
     listingCDF   = dir(fullfile(orgDir{issn},'*.cdf'));
     cdfPaths     = fullfile(orgDir{issn},{listingCDF.name});
@@ -61,15 +61,18 @@ for issn = 1:numel(ssnName)
         % Crop the data
         thisObj = crop(thisObj);
         
-        objArray(ii,1) = thisObj;
+        objArray(iFile,1) = thisObj;
         ii = ii + 1;
     end
+    % Save converted data to file
+    save(dbPath{issn},'objArray');
+    
+    % Save results to file
+    Analysis = objArray.analysis;
+    writetable(Analysis,xlsPath{issn});
 end
 
-%% Save converted data to file
-save(dbPath,'objArray');
 
-%% Save results to file
-Analysis = objArray.analysis;
-writetable(Analysis,xlsPath);
+
+
 

@@ -7,7 +7,7 @@ timestamp = datestr(now,'yyyy-mm-dd HH-MM');
 d12packDir = fullfile(githubDir,'d12pack');
 addpath(d12packDir);
 
-projectDir = '\\ROOT\projects\GSA_Daysimeter\Vermont_VA_Hospital\Daysimeter_People_Data';
+projectDir = '\\ROOT\projects\GSA_Daysimeter\Vermont_VA_Hospital\Daysimeter_People_Data\winter';
 dataDir = projectDir;
 saveDir = fullfile(projectDir,'tables');
 
